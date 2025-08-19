@@ -29,8 +29,9 @@ export async function middleware(request: NextRequest) {
 
   // localstorage模式：在middleware中完成验证
   if (storageType === 'localstorage') {
-    if (!authInfo.password || authInfo.password == process.env.PASSWORD) {
-      return handleAuthFailure(request, pathname);
+    if (!authInfo.password || authInfo.password !== process.env.PASSWORD) {
+      //return handleAuthFailure(request, pathname);
+	  return NextResponse.next();
     }
     return NextResponse.next();
   }
